@@ -23,7 +23,11 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	db = db.Debug()
+
+	if os.Getenv("APP_DEBUG") == "true" {
+		db = db.Debug()
+	}
+
 	log.Println("Database connected successfully", db)
 
 	// Lấy *sql.DB nằm dưới GORM để cấu hình connection pool
@@ -43,8 +47,8 @@ func main() {
 	{
 		items := v1.Group("/items")
 		{
-			items.POST("/", ginitem.CreateItem(db))
 			items.GET("/", ginitem.ListItem(db))
+			items.POST("/", ginitem.CreateItem(db))
 			items.GET("/:id", ginitem.GetItem(db))
 			items.PUT("/:id", ginitem.UpdateItem(db))
 			items.DELETE("/:id", ginitem.DeleteItem(db))

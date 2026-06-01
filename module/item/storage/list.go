@@ -12,10 +12,12 @@ func (s *sqlStore) ListItem(
 	paging *common.Paging, moreKeys ...string,
 ) ([]model.TodoItem, error) {
 	var result []model.TodoItem
-	db := s.db.Table(model.TodoItem{}.TableName()).Where("status != ?", "Deleted")
+	db := s.db.Table(model.TodoItem{}.TableName())
 	if f := filter; f != nil {
 		if v := f.Status; v != "" {
 			db = db.Where("status = ?", v)
+		} else {
+			db = db.Where("status != ?", "Deleted")
 		}
 	}
 	// Tính total items

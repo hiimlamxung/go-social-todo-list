@@ -21,6 +21,7 @@ func CreateItem(db *gorm.DB) func(c *gin.Context) {
 			})
 			return
 		}
+		
 		store := storage.NewSQLStore(db)           // tạo layer store
 		business := biz.NewCreateNewItemBiz(store) // tạo layer business
 

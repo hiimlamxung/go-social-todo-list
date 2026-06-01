@@ -1,3 +1,7 @@
 .env
 .claude
 CLAUDE.md
+tmp/
+build-errors.log
+.vscode/
+.air.toml

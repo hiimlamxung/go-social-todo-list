@@ -6,7 +6,7 @@ type successRes struct {
 	Filter any `json:"filter,omitempty"`
 }
 
-func NewSuccessResponse(data, paging, filter any) *successRes {
+func NewSuccessResponse(data any, paging, filter any) *successRes {
 	return &successRes{Data: data, Paging: paging, Filter: filter}
 }
 
