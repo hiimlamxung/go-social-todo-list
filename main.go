@@ -35,7 +35,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	sqlDB.SetMaxOpenConns(100)                 // tối đa 25 kết nối đồng thời
+	sqlDB.SetMaxOpenConns(25)                  // tối đa 25 kết nối đồng thời
 	sqlDB.SetMaxIdleConns(25)                  // giữ sẵn 25 kết nối rảnh
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)  // kết nối sống tối đa 5 phút
 	sqlDB.SetConnMaxIdleTime(10 * time.Minute) // rảnh quá 10 phút thì đóng
@@ -60,5 +60,9 @@ func main() {
 			"message": "pong",
 		})
 	})
-	router.Run(":3000") // listens on 0.0.0.0:8080 by default
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000" // giá trị mặc định nếu .env không khai báo PORT
+	}
+	router.Run(":" + port) // lắng nghe ở 0.0.0.0:<port>
 }
