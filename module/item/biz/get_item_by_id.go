@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"g09-social-todo-list/common"
 	"g09-social-todo-list/module/item/model"
 )
 
@@ -20,7 +21,7 @@ func NewGetItemBiz(store GetItemStorage) *getItemBiz {
 func (biz *getItemBiz) GetItemById(ctx context.Context, id int) (*model.TodoItem, error) {
 	data, err := biz.store.GetItem(ctx, map[string]any{"id": id})
 	if err != nil {
-		return nil, err
+		return nil, common.ErrorCannotGetEntity(model.EntityName, err)
 	}
 	return data, nil
 }
