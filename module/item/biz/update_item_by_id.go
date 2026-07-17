@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"g09-social-todo-list/common"
 	"g09-social-todo-list/module/item/model"
 )
 
@@ -21,14 +22,14 @@ func NewUpdateItemBiz(store UpdateItemStorage) *updateItemBiz {
 func (biz *updateItemBiz) UpdateItemById(ctx context.Context, id int, dataUpdate *model.TodoItemUpdate) error {
 	data, err := biz.store.GetItem(ctx, map[string]any{"id": id})
 	if err != nil {
-		return err
+		return common.ErrorCannotGetEntity(model.EntityName, err)
 	}
 	if data.Status == "Deleted" {
 		return model.ErrorItemDeleted
 	}
 
 	if err := biz.store.UpdateItem(ctx, map[string]any{"id": id}, dataUpdate); err != nil {
-		return err
+		return common.ErrorCannotUpdateEntity(model.EntityName, err)
 	}
 
 	return nil

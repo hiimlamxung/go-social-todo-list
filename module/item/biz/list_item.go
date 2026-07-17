@@ -21,7 +21,7 @@ func NewListItemBiz(store ListItemStorage) *listItemBiz {
 func (biz *listItemBiz) ListItem(ctx context.Context, filter *model.Filter, paging *common.Paging) ([]model.TodoItem, error) {
 	data, err := biz.store.ListItem(ctx, filter, paging)
 	if err != nil {
-		return nil, err
+		return nil, common.ErrCannotListEntity(model.EntityName, err)
 	}
 	return data, nil
 }

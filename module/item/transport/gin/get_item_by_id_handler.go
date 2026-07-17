@@ -1,6 +1,7 @@
 package gin
 
 import (
+	"fmt"
 	"g09-social-todo-list/common"
 	"g09-social-todo-list/module/item/biz"
 	"g09-social-todo-list/module/item/storage"
@@ -13,6 +14,13 @@ import (
 
 func GetItem(db *gorm.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
+		// Test Panic + recover
+		go func() {
+			defer common.Recovery()
+			a := []int{}
+			fmt.Println(a[0])
+		}()
+
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

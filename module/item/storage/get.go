@@ -16,5 +16,6 @@ func (s *sqlStore) GetItem(ctx context.Context, cond map[string]any) (*model.Tod
 		}
 		return nil, common.ErrDB(err)
 	}
+
 	return &dataModel, nil
 }

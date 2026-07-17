@@ -22,12 +22,12 @@ func (s *sqlStore) ListItem(
 	}
 	// Tính total items
 	if err := db.Count(&paging.Total).Error; err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 
 	// Lấy items current page
 	if err := db.Offset((paging.Page - 1) * paging.Limit).Order("created_at DESC").Find(&result).Error; err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 	return result, nil
 }
