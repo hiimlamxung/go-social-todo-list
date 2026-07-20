@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"g09-social-todo-list/middleware"
 	ginitem "g09-social-todo-list/module/item/transport/gin"
 
 	"github.com/gin-gonic/gin"
@@ -42,6 +43,7 @@ func main() {
 
 	// ====================================================
 	router := gin.Default()
+	router.Use(middleware.Recover())
 
 	v1 := router.Group("/v1")
 	{

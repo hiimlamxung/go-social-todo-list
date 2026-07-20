@@ -14,17 +14,13 @@ import (
 
 func GetItem(db *gorm.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		// Test Panic + recover
-		go func() {
-			defer common.Recovery()
-			a := []int{}
-			fmt.Println(a[0])
-		}()
+		// test panic
+		a := []int{}
+		fmt.Println(a[0])
 
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+			panic(common.ErrInvalidRequest(err))
 		}
 
 		store := storage.NewSQLStore(db)     // tạo layer store
@@ -32,8 +28,9 @@ func GetItem(db *gorm.DB) func(c *gin.Context) {
 
 		data, err := business.GetItemById(c.Request.Context(), id)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, err)
-			return
+			// c.JSON(http.StatusBadRequest, err)
+			// return
+			panic(err) // test panic -> recover middleware
 		}
 		c.JSON(http.StatusOK, common.SimpleSuccessResponse(data))
 	}
