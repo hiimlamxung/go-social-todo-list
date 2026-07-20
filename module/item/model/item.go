@@ -17,9 +17,10 @@ const (
 
 type TodoItem struct {
 	common.SQLModel
-	Title       string `json:"title" gorm:"column:title"`
-	Description string `json:"description" gorm:"column:description"`
-	Status      string `json:"status" gorm:"column:status"`
+	Title       string        `json:"title" gorm:"column:title"`
+	Description string        `json:"description" gorm:"column:description"`
+	Status      string        `json:"status" gorm:"column:status"`
+	Image       *common.Image `json:"image" gorm:"column:image"`
 }
 
 func (TodoItem) TableName() string {
@@ -27,8 +28,9 @@ func (TodoItem) TableName() string {
 }
 
 type TodoItemCreation struct {
-	Title       string  `json:"title" gorm:"column:title" binding:"required"`
-	Description *string `json:"description" gorm:"column:description"`
+	Title       string        `json:"title" gorm:"column:title" binding:"required"`
+	Description *string       `json:"description" gorm:"column:description"`
+	Image       *common.Image `json:"image" gorm:"column:image"`
 }
 
 func (i *TodoItemCreation) Validate() error {
